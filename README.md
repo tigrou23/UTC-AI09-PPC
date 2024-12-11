@@ -1,3 +1,3 @@
 - Lien vers le rapport final : [Rapport](report/rapport.pdf)
-- Lien vers le code source : [Code](dev/code.ipynb)
+- Lien vers le code source : [Code](dev/code.pl)
 - Lien vers le sujet : [Sujet](sujet.pdf)
