@@ -1,0 +1,15 @@
+.idea/
+report/_minted-rapport/
+report/glossaire.tex
+report/rapport.aux
+report/rapport.bcf
+report/rapport.glo
+report/rapport.ist
+report/rapport.lof
+report/rapport.log
+report/rapport.out
+report/rapport.run.xml
+report/rapport.toc
+report/texput.log
+.DS_Store
+texput.log

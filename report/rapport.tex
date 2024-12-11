@@ -1,0 +1,75 @@
+\documentclass{latexPackage/utc-report/utc-report}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{biblatex}
+\usepackage{glossaries}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{caption}
+
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{0.95,0.95,0.95} % Couleur de fond
+\setminted{
+    bgcolor=bg,
+    frame=lines,
+    framesep=2mm,
+    fontsize=\small,
+    linenos
+}
+
+\setlength{\parindent}{0pt}
+
+\UV{AI09}
+\title{Programmation par Contraintes - Exercice 11}
+\author{{\sc Pereira} Hugo \\ {\sc Maher} Zizouni}
+
+\makeglossaries
+
+\begin{document}
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=7cm]{latexPackage/utc-report/utc-graphics/logos/UTC/logo_UTC.pdf}
+\end{figure}
+
+\vspace{2cm}
+
+\begin{center}
+
+{\color{jauneUTC}\rule{\linewidth}{0.8mm}}
+\vspace*{0mm}
+
+\Huge{\textbf{\theUV \\ \thetitle}}
+{\color{jauneUTC}\rule{\linewidth}{0.8mm}}
+
+\vspace{2cm}
+
+\Large{
+    Professeur : \sc{Moukrim} Aziz \\
+    Étudiants : \sc{Pereira} Hugo \& \sc{Zizouni} Maher
+} \\
+
+\vspace{2cm}
+
+\today
+
+\end{center}
+
+\pagebreak
+
+\tableofcontents{}
+
+\pagebreak
+
+\section{Sources}
+
+\pagebreak
+
+% Figures
+\listoffigures
+
+\end{document}
