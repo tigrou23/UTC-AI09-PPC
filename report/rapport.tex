@@ -224,6 +224,46 @@ FIN=18
 
 \pagebreak
 
+\subsection{Optimisation de la somme des dates de fin}
+
+Si on cherche à optimiser la somme des dates de fin des tâches, on peut ajouter une variable $SOMME_FIN$ qui représente la somme des dates de fin des tâches et une contrainte qui lie cette variable aux dates de fin des tâches. On pourra ensuite utiliser la fonction \texttt{fd\_minimize} de GNU Prolog pour minimiser cette variable. On choisit 200 comme borne supérieure pour cette variable car c'est une limite supérieure suffisante pour couvrir toutes les solutions réalisables.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+fd_domain([SOMME_FIN], 0, 200),
+
+SOMME_FIN #= (DEBUT_1 + P1) + (DEBUT_2 + P2) + (DEBUT_3 + P3)
+             + (DEBUT_4 + P4) + (DEBUT_5 + P5),
+
+fd_minimize(fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5,
+            SOMME_FIN]), SOMME_FIN),
+
+    \end{minted}
+    \caption{Optimisation de la somme des dates de fin}
+\end{figure}
+
+On obtient également une seule solution optimale, qui est la suivante :
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+DEBUT_1=13
+DEBUT_2=4
+DEBUT_3=11
+DEBUT_4=10
+DEBUT_5=0
+SOMME_FIN=56
+    \end{minted}
+    \caption{Résultat de la deuxième optimisation}
+\end{figure}
+
+\pagebreak
+
+\section{Conclusion}
+
+Nous avons donc vu comment modéliser un problème d'ordonnancement en utilisant la programmation par contraintes. Nous avons ensuite implémenté notre solution en GNU Prolog et avons pu résoudre le problème de manière optimale en minimisant la date de fin du projet et la somme des dates de fin des tâches. Nous avons également pu observer que la solution optimale est la même pour les deux optimisations. Cela s'explique par le fait que toutes les tâches sont ordonnancées sans le moindre temps mort. Il n'y a donc pas de différence entre minimiser la date de fin du projet et minimiser la somme des dates de fin des tâches.
+
+\pagebreak
+
 \section{Sources}
 
 \pagebreak

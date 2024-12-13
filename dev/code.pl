@@ -17,7 +17,9 @@ ordonnancement:-
     fd_domain([DEBUT_4], R4, D4_P4),
     fd_domain([DEBUT_5], R5, D5_P5),
 
-    fd_domain([FIN], 0, 22),
+    %fd_domain([FIN], 0, 22),
+
+    fd_domain([SOMME_FIN], 0, 200),
 
     (DEBUT_1+P1 #=< DEBUT_2) #\/ (DEBUT_2+P2 #=< DEBUT_1),
     (DEBUT_1+P1 #=< DEBUT_3) #\/ (DEBUT_3+P3 #=< DEBUT_1),
@@ -30,13 +32,19 @@ ordonnancement:-
     (DEBUT_3+P3 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_3),
     (DEBUT_4+P4 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_4),
 
-    DEBUT_1 + P1 #=< FIN,
-    DEBUT_2 + P2 #=< FIN,
-    DEBUT_3 + P3 #=< FIN,
-    DEBUT_4 + P4 #=< FIN,
-    DEBUT_5 + P5 #=< FIN,
+    % fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5]),
 
-    fd_minimize(fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5, FIN]), FIN),
+    %DEBUT_1 + P1 #=< FIN,
+    %DEBUT_2 + P2 #=< FIN,
+    %DEBUT_3 + P3 #=< FIN,
+    %DEBUT_4 + P4 #=< FIN,
+    %DEBUT_5 + P5 #=< FIN,
+
+    %fd_minimize(fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5, FIN]), FIN),
+
+    SOMME_FIN #= (DEBUT_1 + P1) + (DEBUT_2 + P2) + (DEBUT_3 + P3) + (DEBUT_4 + P4) + (DEBUT_5 + P5),
+
+    fd_minimize(fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5, SOMME_FIN]), SOMME_FIN),
 
     nl,
     write('DEBUT_1='), write(DEBUT_1),
@@ -49,7 +57,7 @@ ordonnancement:-
     nl,
     write('DEBUT_5='), write(DEBUT_5),
     nl,
-    write('FIN='), write(FIN),
+    write('SOMME_FIN='), write(SOMME_FIN),
     nl.
 
 %gprolog
