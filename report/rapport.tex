@@ -65,6 +65,35 @@
 
 \pagebreak
 
+\section{Introduction}
+
+Ce rapport présente notre solution à l'exercice 11 du cours de Programmation par Contraintes. L'objectif de cet exercice est de résoudre un problème d'ordonnancement utilisant la programmation par contraintes. Nous verrons dans un premier temps comment écrire un CSP pour ce problème, puis nous présenterons notre solution développée en GNU Prolog.
+
+\section{Modélisation du problème}
+
+On définira donc un CSP par un triplet $(X, D, C)$ tel que vu en cours.
+
+\subsection{Variables}
+
+\begin{itemize}
+    \item $X = \{DEBUT_1, DEBUT_2, ... , DEBUT_i\}$ : la date de début de la tâche $i$.
+\end{itemize}
+
+\subsection{Domaines}
+
+\begin{itemize}
+    \item $D(DEBUT_i) = \{R_i, R_i + 1, ..., D_i - P_i\}$ : car la tâche $i$ commence après sa date de disponibilité ET avant sa date échue moins sa durée.
+\end{itemize}
+
+\subsection{Contraintes}
+
+\begin{itemize}
+    \item Les contraintes de début et de fin de chaque tâche sont assurées par le domaine.
+    \item $C = \{DEBUT_i + P_i \leq DEBUT_j \text{ ou } DEBUT_j + P_j \leq DEBUT_i\}$ : les tâches $i$ et $j$ avec $i \neq j$ ne peuvent pas se chevaucher car la machine traite une tâche après l'autre.
+\end{itemize}
+
+\pagebreak
+
 \section{Sources}
 
 \pagebreak
