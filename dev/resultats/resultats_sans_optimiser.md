@@ -1,6 +1,6 @@
 # Résulats sans optimiser
 
-```prolog
+```dotenv
 DEBUT_1=10
 DEBUT_2=1
 DEBUT_3=7

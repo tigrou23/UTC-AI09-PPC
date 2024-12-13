@@ -1,6 +1,6 @@
 # Résultat de la première optimisation
 
-```prolog
+```dotenv
 DEBUT_1=13
 DEBUT_2=4
 DEBUT_3=11
