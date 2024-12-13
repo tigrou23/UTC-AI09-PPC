@@ -94,6 +94,136 @@ On définira donc un CSP par un triplet $(X, D, C)$ tel que vu en cours.
 
 \pagebreak
 
+\section{Application du CSP en GNU Prolog}
+
+Le CSP sera appliqué sur le problème suivant :
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+R1 #= 3, P1 #= 5, D1 #= 18,
+R2 #= 1, P2 #= 6, D2 #= 10,
+R3 #= 5, P3 #= 2, D3 #= 14,
+R4 #= 4, P4 #= 1, D4 #= 12,
+R5 #= 0, P5 #= 4, D5 #= 22,
+    \end{minted}
+    \caption{Présentation des données du problème}
+\end{figure}
+
+\subsection{Variables et domaines}
+
+On a donc les variables $DEBUT_i$ pour chaque tâche $i \in [1, 5]$ et les domaines comme énoncés précédemment dans notre CSP.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+D1_P1 is D1 - P1,
+D2_P2 is D2 - P2,
+D3_P3 is D3 - P3,
+D4_P4 is D4 - P4,
+D5_P5 is D5 - P5,
+fd_domain([DEBUT_1], R1, D1_P1),
+fd_domain([DEBUT_2], R2, D2_P2),
+fd_domain([DEBUT_3], R3, D3_P3),
+fd_domain([DEBUT_4], R4, D4_P4),
+fd_domain([DEBUT_5], R5, D5_P5),
+    \end{minted}
+    \caption{Variables et domaines}
+\end{figure}
+
+\pagebreak
+
+\subsection{Contraintes}
+
+On a donc les contraintes de chevauchement des tâches comme énoncées précédemment dans notre CSP.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+(DEBUT_1+P1 #=< DEBUT_2) #\/ (DEBUT_2+P2 #=< DEBUT_1),
+(DEBUT_1+P1 #=< DEBUT_3) #\/ (DEBUT_3+P3 #=< DEBUT_1),
+(DEBUT_1+P1 #=< DEBUT_4) #\/ (DEBUT_4+P4 #=< DEBUT_1),
+(DEBUT_1+P1 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_1),
+(DEBUT_2+P2 #=< DEBUT_3) #\/ (DEBUT_3+P3 #=< DEBUT_2),
+(DEBUT_2+P2 #=< DEBUT_4) #\/ (DEBUT_4+P4 #=< DEBUT_2),
+(DEBUT_2+P2 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_2),
+(DEBUT_3+P3 #=< DEBUT_4) #\/ (DEBUT_4+P4 #=< DEBUT_3),
+(DEBUT_3+P3 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_3),
+(DEBUT_4+P4 #=< DEBUT_5) #\/ (DEBUT_5+P5 #=< DEBUT_4),
+    \end{minted}
+    \caption{Contraintes de non chevauchement}
+\end{figure}
+
+\pagebreak
+
+\subsection{Résolution et résultats}
+
+Pour résoudre le problème, on utilise la fonction \texttt{fd\_labeling} de GNU Prolog.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5]),
+    \end{minted}
+    \caption{Résolution du problème}
+\end{figure}
+
+On affiche ensuite les résultats.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+nl,
+write('DEBUT_1='), write(DEBUT_1),
+nl,
+write('DEBUT_2='), write(DEBUT_2),
+nl,
+write('DEBUT_3='), write(DEBUT_3),
+nl,
+write('DEBUT_4='), write(DEBUT_4),
+nl,
+write('DEBUT_5='), write(DEBUT_5),
+nl.
+    \end{minted}
+    \caption{Affichage des résultats}
+\end{figure}
+
+Et on obtient des résultats qui respectent les contraintes. Notre solveur trouve plusieurs solutions, ces dernières se trouvent dans le fichier \url{dev/resultats/resultats_sans_optimiser.md}.
+
+\pagebreak
+
+\section{Optimisation du problème}
+
+\subsection{Optimisation de la date de fin}
+
+Si on cherche à optimiser la date de fin du projet, on peut ajouter une variable $FIN$ qui représente la date de fin du projet et une contrainte qui lie cette variable aux dates de fin des tâches. On pourra ensuite utiliser la fonction \texttt{fd\_minimize} de GNU Prolog pour minimiser cette variable. Il ne nous semble pas nécessaire de renseigner le domaine de cette nouvelle variable puisque les autres contraintes lui donneront de fait une borne inférieure. Cependant, après certaines recherches sur internet, il semble que cela soit nécessaire pour permettre au solveur d’effectuer la propagation et d’explorer la solution de manière efficace. On choisit 22 comme borne supérieure pour cette variable car c’est la date de fin maximale possible.
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+fd_domain([FIN], 0, 22),
+
+DEBUT_1 + P1 #=< FIN,
+DEBUT_2 + P2 #=< FIN,
+DEBUT_3 + P3 #=< FIN,
+DEBUT_4 + P4 #=< FIN,
+DEBUT_5 + P5 #=< FIN,
+
+fd_minimize(fd_labeling([DEBUT_1, DEBUT_2, DEBUT_3, DEBUT_4, DEBUT_5, FIN]), FIN),
+    \end{minted}
+    \caption{Optimisation de la date de fin}
+\end{figure}
+
+Cette fois, on obtient une seule solution optimale, qui est la suivante :
+
+\begin{figure}[h!]
+    \begin{minted}{prolog}
+DEBUT_1=13
+DEBUT_2=4
+DEBUT_3=11
+DEBUT_4=10
+DEBUT_5=0
+FIN=18
+    \end{minted}
+    \caption{Résultat de la première optimisation}
+\end{figure}
+
+\pagebreak
+
 \section{Sources}
 
 \pagebreak
